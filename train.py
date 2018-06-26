@@ -20,11 +20,11 @@ def train(
         summary_path
 ):
 
-    train_img_path = 'images/'
-    evaluate_path = 'images/'
+    train_img_path = '/var/data/bias_data/image/train'
+    evaluate_path = '/var/data/bias_data/image/train'
     num_whole_images = 60000
     num_batches = int(float(num_whole_images) / batch_size)
-    wnid_labels = ['0', '1', '2', '3', '4', '5']
+    wnid_labels = ['cheer_out', 'fearful_out', 'happy_out', 'joy_out', 'rage_out', 'sorrow_out']
 
     x = tf.placeholder(tf.float32, [None, 150, 150, 3])
     y = tf.placeholder(tf.float32, [None, 6])
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     LAMBDA = 5e-04  # for weight decay
     LEARNING_RATE = 1e-03
     EPOCHS = 90
-    BATCH_SIZE = 3
+    BATCH_SIZE = 21
     DISPLAY_STEP = 10
     TEST_STEP = 500
     resume = False

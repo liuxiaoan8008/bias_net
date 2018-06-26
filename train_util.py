@@ -73,6 +73,8 @@ def read_batch(batch_size, images_source, wnid_labels):
     # TODO
     np.vstack(batch_images)
     np.vstack(batch_labels)
+    print len(batch_images),
+    print len(batch_labels)
     return batch_images, batch_labels
 
 
