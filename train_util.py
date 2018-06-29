@@ -64,7 +64,7 @@ def read_batch(batch_size, images_source, wnid_labels):
     batch_images = []
     batch_labels = []
     for j in range(len(wnid_labels)):
-        for i in range(batch_size):
+        for i in range(batch_size/len(wnid_labels)):
             folder = wnid_labels[j]
             batch_images.append(read_image(os.path.join(images_source, folder)))
             batch_labels.append(onehot(j))
