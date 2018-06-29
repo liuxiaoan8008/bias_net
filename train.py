@@ -86,11 +86,12 @@ def train(
 
         # creating and starting parallel threads to fill the queue
         num_threads = 3
+        threads = []
         for i in range(num_threads):
             t = threading.Thread(target=enqueue_batches)
             t.setDaemon(True)
             t.start()
-            coord.join(t)
+            threads.append(t)
 
         # operation to write logs for tensorboard visualization
         train_writer = tf.summary.FileWriter(os.path.join(summary_path, 'train'), sess.graph)
@@ -132,6 +133,7 @@ def train(
         print('Variables saved in file: %s' % save_path)
 
         coord.request_stop()
+        coord.join(threads)
 
 
 if __name__ == '__main__':
