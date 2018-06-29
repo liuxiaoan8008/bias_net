@@ -90,6 +90,7 @@ def train(
             t = threading.Thread(target=enqueue_batches)
             t.setDaemon(True)
             t.start()
+            coord.join(t)
 
         # operation to write logs for tensorboard visualization
         train_writer = tf.summary.FileWriter(os.path.join(summary_path, 'train'), sess.graph)
@@ -140,7 +141,7 @@ if __name__ == '__main__':
     LAMBDA = 5e-04  # for weight decay
     LEARNING_RATE = 1e-03
     EPOCHS = 90
-    BATCH_SIZE = 21
+    BATCH_SIZE = 128
     DISPLAY_STEP = 10
     TEST_STEP = 500
     resume = False
