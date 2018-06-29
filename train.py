@@ -96,6 +96,9 @@ def train(
         # operation to write logs for tensorboard visualization
         train_writer = tf.summary.FileWriter(os.path.join(summary_path, 'train'), sess.graph)
 
+        valid_batch_size = 126
+        val_im, val_cls = tu.read_batch(valid_batch_size, evaluate_path, wnid_labels)
+
         start_time = time.time()
         for e in range(sess.run(epoch), epochs):
             for i in range(num_batches):
@@ -116,8 +119,6 @@ def train(
 
                 # make test and evaluate validation accuracy
                 if step % test_step == 0:
-                    valid_batch_size = 50
-                    val_im, val_cls = tu.read_batch(valid_batch_size, evaluate_path, wnid_labels)
                     v_a = sess.run(accuracy, feed_dict={x_b: val_im, y_b: val_cls, lr: learning_rate, keep_prob: 1.0})
                     # intermediate time
                     int_time = time.time()
