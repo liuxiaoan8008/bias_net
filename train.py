@@ -137,35 +137,60 @@ def train(
         coord.join(threads)
 
 
+def predict(x):
+    ckpt_path = 'ckpt-alexnet'
+    x_holder = tf.placeholder(tf.float32, [None, 150, 150, 3])
+    keep_prob = tf.placeholder(tf.float32)
+
+    pred, _ = alexnet.classifier(x_holder, keep_prob)
+
+    sess = tf.Session()
+    saver = tf.train.Saver()
+    saver.restore(sess, os.path.join(ckpt_path, 'alexnet-cnn.ckpt'))
+
+    feed_dict = {
+        x_holder: x,
+        keep_prob: 1.0
+    }
+
+    predictions = sess.run(pred,feed_dict=feed_dict)
+    return predictions
+
+
+
+
+
 if __name__ == '__main__':
+    val_im = tu.read_image('images/0/')
+    predict(val_im)
 
-    DROPOUT = 0.5
-    MOMENTUM = 0.9
-    LAMBDA = 5e-04  # for weight decay
-    LEARNING_RATE = 1e-03
-    EPOCHS = 90
-    BATCH_SIZE = 126
-    DISPLAY_STEP = 10
-    TEST_STEP = 500
-    resume = False
-
-    CKPT_PATH = 'ckpt-alexnet'
-    if not os.path.exists(CKPT_PATH):
-        os.makedirs(CKPT_PATH)
-    SUMMARY = 'summary'
-    if not os.path.exists(SUMMARY):
-        os.makedirs(SUMMARY)
-
-    train(
-        EPOCHS,
-        BATCH_SIZE,
-        LEARNING_RATE,
-        DROPOUT,
-        MOMENTUM,
-        LAMBDA,
-        resume,
-        DISPLAY_STEP,
-        TEST_STEP,
-        CKPT_PATH,
-        SUMMARY,
-    )
+    # DROPOUT = 0.5
+    # MOMENTUM = 0.9
+    # LAMBDA = 5e-04  # for weight decay
+    # LEARNING_RATE = 1e-03
+    # EPOCHS = 90
+    # BATCH_SIZE = 126
+    # DISPLAY_STEP = 10
+    # TEST_STEP = 500
+    # resume = False
+    #
+    # CKPT_PATH = 'ckpt-alexnet'
+    # if not os.path.exists(CKPT_PATH):
+    #     os.makedirs(CKPT_PATH)
+    # SUMMARY = 'summary'
+    # if not os.path.exists(SUMMARY):
+    #     os.makedirs(SUMMARY)
+    #
+    # train(
+    #     EPOCHS,
+    #     BATCH_SIZE,
+    #     LEARNING_RATE,
+    #     DROPOUT,
+    #     MOMENTUM,
+    #     LAMBDA,
+    #     resume,
+    #     DISPLAY_STEP,
+    #     TEST_STEP,
+    #     CKPT_PATH,
+    #     SUMMARY,
+    # )
