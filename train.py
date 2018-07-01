@@ -163,8 +163,8 @@ if __name__ == '__main__':
     test_images = []
     test_label = []
 
-    test_images = test_images + tu.read_test_image('/var/data/bias_data/image/train/test_old')
-    test_images = test_images + tu.read_test_image('/var/data/bias_data/image/train/test_young')
+    test_images = test_images + tu.read_test_image('/var/data/bias_data/image/test/test_old')
+    test_images = test_images + tu.read_test_image('/var/data/bias_data/image/test/test_young')
 
     for i in range(len(test_images)):
         if i < (len(test_label)/2):
