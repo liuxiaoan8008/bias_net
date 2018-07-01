@@ -175,7 +175,14 @@ if __name__ == '__main__':
     keep_prob, prob, sess, x_holder = preload()
 
     results = predict(keep_prob, prob, sess, x_holder,test_images)
-    print results
+
+    results_two_class = []
+    for re in results:
+        results_two_class.append([sum(re[:3]),sum(re[3:])])
+    print results_two_class
+
+
+
     # DROPOUT = 0.5
     # MOMENTUM = 0.9
     # LAMBDA = 5e-04  # for weight decay
