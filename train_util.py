@@ -87,7 +87,7 @@ def read_image(images_folder):
 def read_test_image(images_source):
     images = []
     for img_name in os.listdir(images_source):
-        image_path = os.path.join(img_name, random.choice(os.listdir(images_source)))
+        image_path = os.path.join(images_source, img_name)
         im_array = preprocess_image(image_path)
         images.append(im_array)
     return images
