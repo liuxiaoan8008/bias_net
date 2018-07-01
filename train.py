@@ -137,16 +137,7 @@ def train(
         coord.join(threads)
 
 
-def predict(x):
-    ckpt_path = 'ckpt-alexnet'
-    x_holder = tf.placeholder(tf.float32, [None, 150, 150, 3])
-    keep_prob = tf.placeholder(tf.float32)
-
-    pred, prob = alexnet.classifier(x_holder, keep_prob)
-
-    sess = tf.Session()
-    saver = tf.train.Saver()
-    saver.restore(sess, os.path.join(ckpt_path, 'alexnet-cnn.ckpt'))
+def predict(keep_prob, prob, sess, x_holder, x):
 
     feed_dict = {
         x_holder: x,
@@ -157,14 +148,34 @@ def predict(x):
     return predictions
 
 
-
+def preload():
+    ckpt_path = 'ckpt-alexnet'
+    x_holder = tf.placeholder(tf.float32, [None, 150, 150, 3])
+    keep_prob = tf.placeholder(tf.float32)
+    pred, prob = alexnet.classifier(x_holder, keep_prob)
+    sess = tf.Session()
+    saver = tf.train.Saver()
+    saver.restore(sess, os.path.join(ckpt_path, 'alexnet-cnn.ckpt'))
+    return keep_prob, prob, sess, x_holder
 
 
 if __name__ == '__main__':
-    val_im = tu.read_image('/var/data/bias_data/image/test_sample/')
-    prb =  predict([val_im])
-    print prb
+    test_images = []
+    test_label = []
 
+    test_images = test_images + tu.read_test_image('/var/data/bias_data/image/train/test_old')
+    test_images = test_images + tu.read_test_image('/var/data/bias_data/image/train/test_young')
+
+    for i in range(len(test_images)):
+        if i < (len(test_label)/2):
+            test_label.append(1)
+        else:
+            test_label.append(0)
+
+    keep_prob, prob, sess, x_holder = preload()
+
+    results = predict(keep_prob, prob, sess, x_holder,test_images)
+    print results
     # DROPOUT = 0.5
     # MOMENTUM = 0.9
     # LAMBDA = 5e-04  # for weight decay

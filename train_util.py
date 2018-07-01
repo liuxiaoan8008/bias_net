@@ -84,6 +84,14 @@ def read_image(images_folder):
     im_array = preprocess_image(image_path)
     return im_array
 
+def read_test_image(images_source):
+    images = []
+    for img_name in os.listdir(images_source):
+        image_path = os.path.join(img_name, random.choice(os.listdir(images_source)))
+        im_array = preprocess_image(image_path)
+        images.append(im_array)
+    return images
+
 
 def preprocess_image(image_path):
     IMAGENET_MEAN = [123.68, 116.779, 103.939]  # rgb format
