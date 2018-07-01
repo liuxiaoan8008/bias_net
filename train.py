@@ -38,7 +38,7 @@ def train(
         enqueue_op = q.enqueue_many([x, y])
         x_b, y_b = q.dequeue_many(batch_size)
 
-    pred, _ = alexnet.classifier(x_b, keep_prob)
+    pred, prob = alexnet.classifier(x_b, keep_prob)
 
     # cross-entropy and weight decay
     with tf.name_scope('cross_entropy'):
@@ -142,7 +142,7 @@ def predict(x):
     x_holder = tf.placeholder(tf.float32, [None, 150, 150, 3])
     keep_prob = tf.placeholder(tf.float32)
 
-    pred, _ = alexnet.classifier(x_holder, keep_prob)
+    pred, prob = alexnet.classifier(x_holder, keep_prob)
 
     sess = tf.Session()
     saver = tf.train.Saver()
@@ -153,7 +153,7 @@ def predict(x):
         keep_prob: 1.0
     }
 
-    predictions = sess.run(pred,feed_dict=feed_dict)
+    predictions = sess.run(prob,feed_dict=feed_dict)
     return predictions
 
 
@@ -161,8 +161,9 @@ def predict(x):
 
 
 if __name__ == '__main__':
-    val_im = tu.read_image('images/0/')
-    predict(val_im)
+    val_im = tu.read_image('/var/data/bias_data/image/test_sample/')
+    prb =  predict([val_im])
+    print prb
 
     # DROPOUT = 0.5
     # MOMENTUM = 0.9
