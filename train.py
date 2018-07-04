@@ -183,6 +183,7 @@ if __name__ == '__main__':
 
 
 
+
     # DROPOUT = 0.5
     # MOMENTUM = 0.9
     # LAMBDA = 5e-04  # for weight decay
