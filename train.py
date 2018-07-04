@@ -178,8 +178,13 @@ if __name__ == '__main__':
 
     results_two_class = []
     for re in results:
-        results_two_class.append([sum(re[:3]),sum(re[3:])])
-    print results_two_class
+        results_two_class.append([sum([re[0],re[2],re[3]]),sum([re[1],re[4],re[5]])])
+    re_file = open('/var/data/bias_data/image/test/test_results.txt','w')
+    for re in results_two_class:
+        print re
+        re_file.write(str(re[0])+','+str(re[1])+'\n')
+    re_file.close()
+        
 
 
 
