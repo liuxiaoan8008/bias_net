@@ -8,6 +8,12 @@
 5. Test experiments and calculate metrics.
 6. analysis results and optimize.
 
+**notice**:
+
+>fail reason:
+
+>it took too much time to find similar photos for every photo
+
 2018.7 TODO:
 1. prepare 600 test photos.
 2. check cnn classifier model's performance.
