@@ -168,9 +168,9 @@ if __name__ == '__main__':
 
     for i in range(len(test_images)):
         if i < (len(test_label)/2):
-            test_label.append(1)
+            test_label.append(1) # old
         else:
-            test_label.append(0)
+            test_label.append(0) # young
 
     keep_prob, prob, sess, x_holder = preload()
 
@@ -179,12 +179,19 @@ if __name__ == '__main__':
     results_two_class = []
     for re in results:
         results_two_class.append([sum([re[0],re[2],re[3]]),sum([re[1],re[4],re[5]])])
-    re_file = open('/var/data/bias_data/image/test/test_results.txt','w')
-    for re in results_two_class:
+
+    re_file_two = open('/var/data/bias_data/image/test/test_results_two.txt','w')
+    for re,label in zip(results_two_class,test_label):
         print re
-        re_file.write(str(re[0])+','+str(re[1])+'\n')
-    re_file.close()
-        
+        re_file_two.write(label+','+str(re[0])+','+str(re[1])+'\n')
+    re_file_two.close()
+
+    re_file_six = open('/var/data/bias_data/image/test/test_results_six.txt','w')
+    for re,label in zip(results,test_label):
+        six = ','.join(re)
+        re_file_six.write(label+','+six+'\n')
+    re_file_six.close()
+
 
 
 
