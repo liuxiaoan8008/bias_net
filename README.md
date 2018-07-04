@@ -14,3 +14,4 @@
 3. prepare experiment for CNNAT.
 5. Test experiments and calculate metrics.
 6. analysis results and optimize.
+7. write experiments report.
